@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+  namenode:
+    build: .
+    image: hadoop
+    networks:
+      static-network:
+        ipv4_address: 172.20.128.5
+
+  datanode1:
+    image: hadoop
+    networks:
+      static-network:
+        ipv4_address: 172.20.128.10
+
+  datanode2:
+    image: hadoop
+    networks:
+      static-network:
+        ipv4_address: 172.20.128.20
+
+  datanode3:
+    image: hadoop
+    networks:
+      static-network:
+        ipv4_address: 172.20.128.30
+
+  datanode4:
+    image: hadoop
+    networks:
+      static-network:
+        ipv4_address: 172.20.128.40
+
+networks:
+  static-network:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          ip_range: 172.28.5.0/24

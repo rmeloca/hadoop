@@ -1,7 +1,7 @@
-FROM ubuntu:15.04
+FROM ubuntu:14.04
 
-ADD hadoop-1.2.1 /code
-WORKDIR /code
+ADD hadoop-1.2.1 /hadoop-1.2.1
+WORKDIR /hadoop-1.2.1
 
 ENV HADOOP_HOME="/code/hadoop-1.2.1"
 ENV JAVA_HOME="/usr/lib/jvm/java-8-oracle"
@@ -23,20 +23,31 @@ RUN apt-get -qq -y install ssh
 RUN apt-get -qq -y install rsync
 
 RUN apt-get -qq -y install openssh-server
-RUN mkdir /var/run/sshd
 
-RUN ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa 
-RUN cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+# SSH login fix. Otherwise user is kicked off after login
+#RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+#RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+#ENV NOTVISIBLE "in users profile"
+#RUN echo "export VISIBLE=now" >> /etc/profile
 
-RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+# timezone
+ENV TZ=America/Sao_Paulo
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ENV NOTVISIBLE "in users profile"
-RUN echo "export VISIBLE=now" >> /etc/profile
+# SSH keygen
+RUN cd ~ && ssh-keygen -t rsa -P '' -f ~/.ssh/id_dsa \
+    && cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys \
+    && chmod 644 ~/.ssh/authorized_keys
 
-EXPOSE 22
+# Daemon SSH 
+RUN mkdir /var/run/sshd \
+    && sed -i 's/without-password/yes/g' /etc/ssh/sshd_config \
+    && sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config \
+    && echo '    StrictHostKeyChecking no' >> /etc/ssh/ssh_config \
+    && echo 'SSHD: ALL' >> /etc/hosts.allow
+
+RUN echo 'root:hadoop' | chpasswd
+
+EXPOSE 22 50070 50030
+
 CMD ["/usr/sbin/sshd", "-D"]
-
-#RUN wget http://mirror.nbtelecom.com.br/apache/hadoop/common/hadoop-1.2.1/hadoop-1.2.1.tar.gz
-#RUN tar zxf hadoop-1.2.1.tar.gz
-
-#RUN $HADOOP_HOME/hdfs dfsadmin -safemode leave
