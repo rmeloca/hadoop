@@ -1,5 +1,11 @@
 # Hadoop with Docker
 
+download hadoop
+
+``wget http://mirror.nbtelecom.com.br/apache/hadoop/common/hadoop-1.2.1/hadoop-1.2.1.tar.gz``
+
+``tar zxf hadoop-1.2.1.tar.gz``
+
 `./configure`
 
 conf/core-site.xml:
@@ -34,6 +40,8 @@ conf/mapred-site.xml:
      </property>
 </configuration>
 ```
+
+configurar security mode off
 
 `docker-compose build`
 

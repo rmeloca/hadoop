@@ -4,30 +4,40 @@ services:
   namenode:
     build: .
     image: hadoop
+    volumes:
+      - .:/hadoop-1.2.1
     networks:
       static-network:
         ipv4_address: 172.20.128.5
 
   datanode1:
     image: hadoop
+    volumes:
+      - .:/hadoop-1.2.1
     networks:
       static-network:
         ipv4_address: 172.20.128.10
 
   datanode2:
     image: hadoop
+    volumes:
+      - .:/hadoop-1.2.1
     networks:
       static-network:
         ipv4_address: 172.20.128.20
 
   datanode3:
     image: hadoop
+    volumes:
+      - .:/hadoop-1.2.1
     networks:
       static-network:
         ipv4_address: 172.20.128.30
 
   datanode4:
     image: hadoop
+    volumes:
+      - .:/hadoop-1.2.1
     networks:
       static-network:
         ipv4_address: 172.20.128.40

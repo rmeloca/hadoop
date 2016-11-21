@@ -18,17 +18,10 @@ RUN echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-s
 RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
 RUN apt-get -qq -y install oracle-java8-installer
 
-RUN apt-get -qq -y install wget
 RUN apt-get -qq -y install ssh
 RUN apt-get -qq -y install rsync
 
 RUN apt-get -qq -y install openssh-server
-
-# SSH login fix. Otherwise user is kicked off after login
-#RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-#RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
-#ENV NOTVISIBLE "in users profile"
-#RUN echo "export VISIBLE=now" >> /etc/profile
 
 # timezone
 ENV TZ=America/Sao_Paulo
