@@ -8,6 +8,10 @@ download hadoop
 
 `./configure`
 
+conf/hadoop-env.sh
+
+``export JAVA_HOME=/usr/lib/jvm/java-8-oracle``
+
 conf/core-site.xml:
 
 ```xml
