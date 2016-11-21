@@ -27,6 +27,10 @@ conf/hdfs-site.xml:
          <name>dfs.replication</name>
          <value>1</value>
      </property>
+     <property>
+        <name>dfs.safemode.threshold.pct</name>
+        <value>0</value>
+     </property>
 </configuration>
 ```
 
@@ -40,8 +44,6 @@ conf/mapred-site.xml:
      </property>
 </configuration>
 ```
-
-configurar security mode off
 
 `docker-compose build`
 
