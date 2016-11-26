@@ -1,5 +1,15 @@
 # Hadoop with Docker
 
+# Para executar automaticamente
+
+``./configure``
+
+``docker-compose build``
+
+``docker-compose up -d``
+
+# Configurações
+
 download hadoop
 
 ``wget http://mirror.nbtelecom.com.br/apache/hadoop/common/hadoop-1.2.1/hadoop-1.2.1.tar.gz``
@@ -72,3 +82,13 @@ password: hadoop
 `bin/hadoop fs -put conf input`
 
 `bin/hadoop jar hadoop-examples-*.jar grep input output 'dfs[a-z.]+'`
+
+# Para executar no modo swarm
+
+`docker swarm init`
+
+`docker swarm join`
+
+`docker network create --driver overlay --subnet 10.0.9.0/24 hadoop-rede`
+
+`docker service create --replicas 5 --network hadoop-rede --name datanode hadoop`
