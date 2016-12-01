@@ -35,13 +35,8 @@ password: hadoop
 docker exec -it c80e57635870 sh -c "ssh root@localhost"
 
 echo datanode.1.bv3j9e32ke4c960am9b3u02qt >> conf/slaves
-echo datanode.3.21w8czayx1xi0uqyry5zkwipv >> conf/slaves
-echo datanode.4.7lrs9se1tzqw1j5o03mkoqvq8 >> conf/slaves
-echo datanode.5.bkao2exf8985wsrg51d0p6ndu >> conf/slaves
 
-ssh-keygen -t rsa
-
-ssh-copy-id root@10.0.0.5
+ssh-copy-id root@datanode.1.bv3j9e32ke4c960am9b3u02qt
 hadoop
 
 bin/hadoop com.sun.tools.javac.Main WordCount.java
