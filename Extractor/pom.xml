@@ -34,7 +34,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib</classpathPrefix> 
-                            <mainClass>com.similarity.Similarity</mainClass> 
+                            <mainClass>mrdp.ch5.CartesianProduct</mainClass> 
                         </manifest>
                         <manifestEntries>
                             <Class-Path>lib/</Class-Path>
