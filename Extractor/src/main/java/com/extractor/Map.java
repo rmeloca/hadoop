@@ -1,26 +1,36 @@
 package com.extractor;
 
+
 import info.debatty.java.stringsimilarity.Jaccard;
 import java.io.IOException;
-import java.util.ArrayList;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class Map extends Mapper<Object, Iterable<Text>, Text, Iterable<Text>> {
+/**
+ *
+ * @author romulo
+ */
+public class Map extends Mapper<Text, Text, Text, Text> {
 
-    Text tweet = null;
-    IntWritable distance = null;
-
-    private final static IntWritable one = new IntWritable(1);
-    private Text word = new Text();
+    private Text outkey = new Text();
 
     @Override
-    protected void map(Object key, Iterable<Text> value, Context context) throws IOException, InterruptedException {
-        Jaccard jaccard = new Jaccard(2);
-        this.tweet = value.iterator().next();
-        System.out.println(tweet.toString());
-        this.distance = new IntWritable((int) jaccard.similarity("ABCDE", "ABCDF"));
-        context.write(tweet, new ArrayList<>());
+    protected void map(Text key, Text value, Context context) throws IOException, InterruptedException {
+
+        // If the two comments are not equal
+        if (!key.toString().equals(value.toString())) {
+            String tweet1 = key.toString().split(":")[1];
+            String tweet2 = value.toString().split(":")[1];
+
+            Jaccard jaccard = new Jaccard(2);
+            double similarity = jaccard.similarity(tweet1, tweet2);
+            if (similarity > 0.6 && similarity < 0.7) {
+                System.out.println(tweet1);
+                System.out.println(tweet2);
+                System.out.println("Similarity:" + similarity);
+                System.out.println("---");
+            }
+
+        }
     }
 }

@@ -15,9 +15,8 @@ import org.apache.hadoop.util.GenericOptionsParser;
 public class CartesianProduct {
 
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
-
-        long start = System.currentTimeMillis();
-        JobConf conf = new JobConf("Cartesian Product");
+//        long start = System.currentTimeMillis();
+        JobConf conf = new JobConf("Similarity Tweets check");
         String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
         if (otherArgs.length != 2) {
             System.err.println("Usage: CartesianProduct <comment data> <out>");
@@ -34,22 +33,19 @@ public class CartesianProduct {
         conf.setInputFormat(CartesianInputFormat.class);
         CartesianInputFormat.setLeftInputInfo(conf, TextInputFormat.class, otherArgs[0]);
         CartesianInputFormat.setRightInputInfo(conf, TextInputFormat.class, otherArgs[0]);
-
         TextOutputFormat.setOutputPath(conf, new Path(otherArgs[1]));
 
         conf.setOutputKeyClass(Text.class);
         conf.setOutputValueClass(Text.class);
 
         RunningJob job = JobClient.runJob(conf);
-        while (!job.isComplete()) {
-            Thread.sleep(1000);
-        }
+//        while (!job.isComplete()) {
+//            Thread.sleep(1000);
+//        }
 
-        long finish = System.currentTimeMillis();
-
-        System.out.println("Time in ms: " + (finish - start));
-
-        System.exit(job.isSuccessful() ? 0 : 2);
+//        long finish = System.currentTimeMillis();
+//        System.out.println("Time in ms: " + (finish - start));
+//        System.exit(job.isSuccessful() ? 0 : 2);
     }
 
 }
