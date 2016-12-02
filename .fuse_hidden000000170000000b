@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#docker
+dnf update -y
+
+curl -fsSL https://get.docker.com/ | sh
+
+dnf install docker -y
+
+systemctl enable docker.service
+systemctl start docker
+
+
+#compose
+curl -L "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)" > /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+
+dnf install docker-compose -y
+
+wget http://mirror.nbtelecom.com.br/apache/hadoop/common/hadoop-1.2.1/hadoop-1.2.1.tar.gz
+tar zxf hadoop-1.2.1.tar.gz
