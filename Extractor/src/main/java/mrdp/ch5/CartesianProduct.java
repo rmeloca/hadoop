@@ -15,7 +15,7 @@ import org.apache.hadoop.util.GenericOptionsParser;
 public class CartesianProduct {
 
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
-//        long start = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
         JobConf conf = new JobConf("Similarity Tweets check");
         String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
         if (otherArgs.length != 2) {
@@ -28,13 +28,16 @@ public class CartesianProduct {
 
         conf.setMapperClass(CartesianMapper.class);
 
-        conf.setNumReduceTasks(0);
+//        conf.setNumReduceTasks(0);
 
         conf.setInputFormat(CartesianInputFormat.class);
         CartesianInputFormat.setLeftInputInfo(conf, TextInputFormat.class, otherArgs[0]);
         CartesianInputFormat.setRightInputInfo(conf, TextInputFormat.class, otherArgs[0]);
         TextOutputFormat.setOutputPath(conf, new Path(otherArgs[1]));
 
+        conf.setCombinerClass(CartesianReducer.class);
+        conf.setReducerClass(CartesianReducer.class);
+        
         conf.setOutputKeyClass(Text.class);
         conf.setOutputValueClass(Text.class);
 
@@ -43,9 +46,9 @@ public class CartesianProduct {
 //            Thread.sleep(1000);
 //        }
 
-//        long finish = System.currentTimeMillis();
-//        System.out.println("Time in ms: " + (finish - start));
-//        System.exit(job.isSuccessful() ? 0 : 2);
+        long finish = System.currentTimeMillis();
+        System.out.println("Time in ms: " + (finish - start));
+        System.exit(job.isSuccessful() ? 0 : 2);
     }
 
 }
