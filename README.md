@@ -4,7 +4,7 @@
 
 ``./configure``
 
-## Executar distribuido
+## Executar distribuído
 
 ``docker-compose build``
 
@@ -30,14 +30,12 @@ password: hadoop
 
 `docker network create --driver overlay --subnet 10.0.9.0/24 hadoop-rede`
 
-`docker service create --replicas 5 --network hadoop-rede --name datanode --mount type=bind,src=`pwd`/hadoop-1.2.1,dst=/hadoop-1.2.1 hadoop`
+`docker service create --replicas 5 --network hadoop-rede --name datanode --mount type=bind,src=$(pwd)/hadoop-1.2.1,dst=/hadoop-1.2.1 hadoop`
 
-docker exec -it c80e57635870 sh -c "ssh root@localhost"
+`docker exec -it c80e57635870 sh -c "ssh root@localhost"`
 
-echo datanode.1.bv3j9e32ke4c960am9b3u02qt >> conf/slaves
+`echo datanode.1.bv3j9e32ke4c960am9b3u02qt >> conf/slaves`
 
-ssh-copy-id root@datanode.1.bv3j9e32ke4c960am9b3u02qt
-hadoop
+`ssh-copy-id root@datanode.1.bv3j9e32ke4c960am9b3u02qt`
 
-bin/hadoop com.sun.tools.javac.Main WordCount.java
-jar cf wc.jar WordCount*.class
+password: hadoop
