@@ -41,6 +41,6 @@ RUN mkdir /var/run/sshd \
 
 RUN echo 'root:hadoop' | chpasswd
 
-EXPOSE 22 50070 50030
+EXPOSE 22 50070 50030 9000 9001
 
 CMD ["/usr/sbin/sshd", "-D"]
