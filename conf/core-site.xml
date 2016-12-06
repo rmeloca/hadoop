@@ -6,6 +6,6 @@
 <configuration>
      <property>
          <name>fs.default.name</name>
-         <value>hdfs://localhost:9000</value>
+         <value>hdfs://datanode.1.89u7r3xlvx08pyiu1i7ej44ie:9000</value>
      </property>
 </configuration>
